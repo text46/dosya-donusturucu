@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="docGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+    <linearGradient id="redBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="100%" stop-color="#dc2626" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-opacity="0.3" flood-color="#0f172a" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Sheet of Paper / Document -->
+  <g filter="url(#shadow)">
+    <!-- Main page -->
+    <path d="M128 88 C128 74.745 138.745 64 152 64 L304 64 L384 144 L384 424 C384 437.255 373.255 448 360 448 L152 448 C138.745 448 128 437.255 128 424 Z" fill="url(#docGrad)" />
+    <!-- Folded corner -->
+    <path d="M304 64 L304 132 C304 138.627 309.373 144 316 144 L384 144 Z" fill="#cbd5e1" opacity="0.9" />
+  </g>
+
+  <!-- Photo gallery preview inside document -->
+  <rect x="168" y="156" width="176" height="120" rx="14" fill="#e2e8f0" />
+  <!-- Sun/moon in photo -->
+  <circle cx="204" cy="192" r="14" fill="#fbbf24" />
+  <!-- Mountain hills in photo -->
+  <path d="M168 252 L220 200 C224 196 230 196 234 200 L276 242 L294 224 C298 220 304 220 308 224 L344 260 L344 262 C344 269.73 337.73 276 330 276 L182 276 C174.27 276 168 269.73 168 262 Z" fill="#3b82f6" opacity="0.85" />
+  <path d="M224 276 L268 232 L310 276 Z" fill="#1d4ed8" opacity="0.75" />
+
+  <!-- PDF Badge -->
+  <g filter="url(#shadow)">
+    <rect x="156" y="304" width="200" height="74" rx="16" fill="url(#redBadge)" />
+    <text x="256" y="356" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="38" text-anchor="middle" letter-spacing="2">PDF</text>
+  </g>
+
+  <!-- Small lightning/offline symbol badge on bottom right -->
+  <circle cx="396" cy="396" r="38" fill="#10b981" stroke="#ffffff" stroke-width="6" />
+  <path d="M396 374 L384 396 L396 396 L392 418 L410 394 L398 394 Z" fill="#ffffff" />
+</svg>
