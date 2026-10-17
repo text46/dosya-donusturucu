@@ -1,0 +1,6 @@
+{
+  "name": "Fotoğraftan PDF'e Dönüştürücü (Çevrimdışı)",
+  "description": "Galerinizdeki fotoğrafları tamamen internetsiz ve çevrimdışı olarak yüksek kaliteli PDF belgelerine dönüştürün.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
