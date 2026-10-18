@@ -27,7 +27,19 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
   const [activePreviewName, setActivePreviewName] = useState<string>('');
 
   if (items.length === 0) {
-    return null;
+    return (
+      <div className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-xs text-center flex flex-col items-center justify-center gap-3">
+        <div className="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
+          <History className="w-7 h-7" />
+        </div>
+        <div>
+          <h4 className="text-sm font-bold text-slate-900">Geçmiş Boş</h4>
+          <p className="text-xs text-slate-500 mt-1 max-w-xs">
+            Dönüştürdüğünüz veya birleştirdiğiniz tüm PDF belgeleri cihazınızın güvenli hafızasında burada saklanır.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   const handleDownload = (item: HistoryItem) => {
@@ -58,6 +70,7 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
       }
     } catch (err: unknown) {
       if ((err as Error)?.name !== 'AbortError') {
+        console.warn('Paylaşım hatası:', err);
         handleDownload(item);
       }
     }
@@ -72,42 +85,47 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
   const closePreview = () => {
     if (activePreviewUrl) {
       URL.revokeObjectURL(activePreviewUrl);
-      setActivePreviewUrl(null);
-      setActivePreviewName('');
     }
+    setActivePreviewUrl(null);
+    setActivePreviewName('');
   };
 
-  const formatDate = (isoStr: string) => {
+  const formatDate = (dateStr: string) => {
     try {
-      const date = new Date(isoStr);
-      return date.toLocaleDateString('tr-TR', {
-        day: 'numeric',
-        month: 'short',
+      const d = new Date(dateStr);
+      return new Intl.DateTimeFormat('tr-TR', {
+        day: '2-digit',
+        month: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-      });
+      }).format(d);
     } catch {
-      return '';
+      return dateStr;
     }
   };
 
   return (
     <>
-      <div className="w-full bg-white rounded-3xl border border-slate-200/90 p-4 sm:p-5 shadow-xs">
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 shadow-xs">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
               <History className="w-4 h-4" />
             </div>
-            <h3 className="font-bold text-slate-900 text-sm sm:text-base">
-              Son Oluşturulan PDF'ler ({items.length})
-            </h3>
+            <div>
+              <h3 className="font-bold text-slate-900 text-sm sm:text-base">
+                Dönüştürme Geçmişi
+              </h3>
+              <p className="text-[11px] text-slate-500">
+                {items.length} kayıt cihazınızda saklanıyor
+              </p>
+            </div>
           </div>
 
           <button
             type="button"
             onClick={onClear}
-            className="text-xs font-medium text-slate-400 hover:text-red-600 transition"
+            className="text-xs font-medium text-slate-400 hover:text-red-600 transition cursor-pointer"
           >
             Geçmişi Temizle
           </button>
@@ -164,7 +182,7 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
                 <button
                   type="button"
                   onClick={() => handlePreview(item)}
-                  className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition"
+                  className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition cursor-pointer"
                   title="Önizle"
                 >
                   <Eye className="w-4 h-4" />
@@ -172,15 +190,15 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
                 <button
                   type="button"
                   onClick={() => handleDownload(item)}
-                  className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition"
-                  title="Tekrar İndir"
+                  className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition cursor-pointer"
+                  title="İndir"
                 >
                   <Download className="w-4 h-4" />
                 </button>
                 <button
                   type="button"
                   onClick={() => handleShare(item)}
-                  className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition"
+                  className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition cursor-pointer"
                   title="Paylaş"
                 >
                   <Share2 className="w-4 h-4" />
@@ -188,7 +206,7 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
                 <button
                   type="button"
                   onClick={() => onDelete(item.id)}
-                  className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
+                  className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition cursor-pointer"
                   title="Kayıttan Sil"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -202,7 +220,7 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
       {/* PDF Quick Preview Modal */}
       {activePreviewUrl && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-xs p-4 animate-in fade-in">
-          <div className="w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+          <div className="w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] border border-slate-200">
             <div className="flex items-center justify-between px-5 py-3.5 bg-slate-50 border-b border-slate-100">
               <h3 className="font-bold text-slate-900 text-sm truncate max-w-xs sm:max-w-md">
                 {activePreviewName}
@@ -210,7 +228,7 @@ export const ConversionHistory: React.FC<ConversionHistoryProps> = ({
               <button
                 type="button"
                 onClick={closePreview}
-                className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition"
+                className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>

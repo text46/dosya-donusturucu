@@ -1,4 +1,4 @@
-export type ImageFilter = 'original' | 'document' | 'grayscale' | 'bw';
+export type ImageFilter = 'original' | 'scanner' | 'magic_color' | 'document' | 'grayscale' | 'bw';
 
 export interface ImageItem {
   id: string;

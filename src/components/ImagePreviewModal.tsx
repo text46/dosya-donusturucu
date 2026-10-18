@@ -26,9 +26,10 @@ export const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({
 
   const filterOptions: { key: ImageFilter; label: string; desc: string }[] = [
     { key: 'original', label: 'Orijinal', desc: 'Olduğu gibi' },
-    { key: 'document', label: 'Belge Modu', desc: 'Okunabilirliği artırır' },
-    { key: 'grayscale', label: 'Gri Ton', desc: 'Renksiz' },
-    { key: 'bw', label: 'Siyah-Beyaz', desc: 'Fotokopi tarzı' },
+    { key: 'scanner', label: 'Tarayıcı', desc: 'Net metin & beyaz zemin' },
+    { key: 'magic_color', label: 'Canlı Renk', desc: 'İmza ve mühürleri korur' },
+    { key: 'document', label: 'Belge', desc: 'Yumuşak kontrast' },
+    { key: 'bw', label: 'Fotokopi', desc: 'Keskin siyah-beyaz' },
   ];
 
   return (

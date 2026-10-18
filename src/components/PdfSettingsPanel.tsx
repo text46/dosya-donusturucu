@@ -165,21 +165,21 @@ export const PdfSettingsPanel: React.FC<PdfSettingsPanelProps> = ({
             {/* Quality & Compression */}
             <div>
               <label className="block font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-slate-500" /> Görüntü Kalitesi
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" /> Dosya Boyutu & Sıkıştırma
               </label>
               <div className="grid grid-cols-3 gap-1.5 bg-slate-100 p-1 rounded-xl">
                 {(
                   [
-                    { key: 'high', label: 'Yüksek' },
+                    { key: 'low', label: 'En Düşük MB' },
                     { key: 'balanced', label: 'Dengeli' },
-                    { key: 'low', label: 'Küçük MB' },
+                    { key: 'high', label: 'Yüksek' },
                   ] as { key: ImageQuality; label: string }[]
                 ).map((q) => (
                   <button
                     key={q.key}
                     type="button"
                     onClick={() => updateSetting('quality', q.key)}
-                    className={`py-1.5 px-2 rounded-lg font-medium transition ${
+                    className={`py-1.5 px-1.5 rounded-lg font-medium transition text-[11px] ${
                       settings.quality === q.key
                         ? 'bg-white text-blue-700 shadow-xs font-semibold'
                         : 'text-slate-600 hover:text-slate-900'

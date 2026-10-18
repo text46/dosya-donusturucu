@@ -25,8 +25,20 @@ export async function generatePdfFromImages(
     throw new Error('Dönüştürülecek fotoğraf bulunamadı.');
   }
 
-  const qualityValue =
-    settings.quality === 'high' ? 0.95 : settings.quality === 'low' ? 0.55 : 0.80;
+  let qualityValue = 0.62;
+  let maxDim = 1200;
+
+  if (settings.quality === 'high') {
+    qualityValue = 0.80;
+    maxDim = 1600;
+  } else if (settings.quality === 'balanced') {
+    qualityValue = 0.68;
+    maxDim = 1300;
+  } else {
+    // 'low' -> Mümkün olan en düşük boyut (Ultra Sıkıştırma)
+    qualityValue = 0.52;
+    maxDim = 1000;
+  }
 
   // Margin in millimeters
   const marginMm =
@@ -43,12 +55,13 @@ export async function generatePdfFromImages(
       statusText: `${i + 1}/${total} sayfa işleniyor...`,
     });
 
-    // Process image with its rotation and filter
+    // Process image with its rotation, filter, aggressive compression and smart scaling
     const { processedUrl, width: imgW, height: imgH } = await processImage(
       item.originalDataUrl,
       item.rotation,
       item.filter,
-      qualityValue
+      qualityValue,
+      maxDim
     );
 
     // Determine orientation for this page

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Hide scrollbars globally across Chrome, Safari, Edge, Firefox, and mobile */
+/* Hide scrollbars globally across Chrome, Safari, Edge, Firefox, and mobile while preserving smooth touch scrolling */
 ::-webkit-scrollbar {
   display: none;
   width: 0px;
@@ -8,9 +8,12 @@
 }
 
 html, body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-x: hidden;
+  background-color: #f8fafc;
+  color: #0f172a;
+  -webkit-tap-highlight-color: transparent;
 }
 
 * {
